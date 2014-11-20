@@ -104,12 +104,13 @@ Meteor.methods({
 
 	},
 
-	addUser: function(name, email, password) {
+	addUser: function(name, email, password, orgid) {
 		var user, userId;
 		user = Accounts.createUser({
 			email: email,
 			profile: {
-				name: name
+				name: name,
+				orgid: orgid
 			}
 		});
 		userId = user;

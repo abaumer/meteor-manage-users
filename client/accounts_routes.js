@@ -1,6 +1,8 @@
 Meteor.startup(function() {
-  Router.route('/admin/users', {
+  Router.route('/adminUsers', {
+    path: 'admin/users',
     name: 'accountsAdmin',
-    template: 'accountsAdmin'
+    template: 'accountsAdmin',
+    loginRequired: 'entrySignIn'
   });
 });

@@ -1,8 +1,8 @@
 Package.describe({
-	name: "manage-users",
-	summary: "A roles based account management system",
-  version: "0.3.0",
-  git: "git@github.com:cfly15/meteor-manage-users.git"
+  name: 'abaumer:meteor-org-users',
+  summary: 'A roles based account management system with organizations',
+  version: '0.1.0',
+  git: 'git@github.com:abaumer/meteor-manage-users.git'
 });
 
 Package.on_use(function (api, where) {

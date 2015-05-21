@@ -1,7 +1,7 @@
 Meteor.methods({
 	deleteUser: function(userId) {
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, ['admin','org-owner']))
 			throw new Meteor.Error(401, "You need to be an admin to delete a user.");
 
 		if (user._id == userId)
@@ -13,7 +13,7 @@ Meteor.methods({
 
 	addUserRole: function(userId, role) {
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, ['admin','org-owner']))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		if (user._id == userId)
@@ -33,7 +33,7 @@ Meteor.methods({
 
 	removeUserRole: function(userId, role) {
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, ['admin','org-owner']))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		if (user._id == userId)
@@ -52,7 +52,7 @@ Meteor.methods({
 
 	addRole: function(role) {
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, ['admin','org-owner']))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		// handle existing role
@@ -64,7 +64,7 @@ Meteor.methods({
 
 	removeRole: function(role) {
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, ['admin','org-owner']))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		// handle non-existing role
@@ -92,7 +92,7 @@ Meteor.methods({
 
 	updateUserInfo: function(id, property, value) {
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, ['admin','org-owner']))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		if (property !== 'profile.name')
@@ -104,14 +104,19 @@ Meteor.methods({
 
 	},
 
-	addUser: function(name, email, password, orgid) {
+	addUser: function(name, email, password, orgid, roles) {
+		var thisUser = Meteor.user();
+		if (!thisUser || !Roles.userIsInRole(thisUser, ['admin','org-owner']))
+			throw new Meteor.Error(401, "You need to be an admin to create a user.");
+
 		var user, userId;
 		user = Accounts.createUser({
 			email: email,
 			profile: {
 				name: name,
 				orgid: orgid
-			}
+			},
+			roles: ['user']
 		});
 		userId = user;
 		Accounts.setPassword(user, password);

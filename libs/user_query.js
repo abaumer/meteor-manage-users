@@ -3,6 +3,10 @@ filteredUserQuery = function(userId, filter) {
 	if (!Roles.userIsInRole(userId, ['admin']))
 		return Meteor.users.find(userId);
 
+	// only return users in their org
+	var adminUser = Meteor.users.findOne(userId);
+	var orgid = adminUser.profile.orgid;
+
 	// TODO: configurable limit and paginiation
 	var queryLimit = 25;
 
@@ -15,7 +19,7 @@ filteredUserQuery = function(userId, filter) {
 			]
 		}, {sort: {emails: 1}, limit: queryLimit});
 	} else {
-		users = Meteor.users.find({}, {sort: {emails: 1}, limit: queryLimit});
+		users = Meteor.users.find({"profile.orgid": orgid}, {sort: {emails: 1}, limit: queryLimit});
 	}
 	return users;
 };

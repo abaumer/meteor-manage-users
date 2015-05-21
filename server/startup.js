@@ -6,4 +6,7 @@ Meteor.startup(function() {
     if (Meteor.roles.find({name: 'org-owner'}).count() < 1 ) {
         Roles.createRole('org-owner');
     }
+    if (Meteor.roles.find({name: 'user'}).count() < 1 ) {
+        Roles.createRole('user');
+    }
 });

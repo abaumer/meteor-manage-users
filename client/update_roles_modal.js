@@ -4,6 +4,12 @@ Template.updateRolesModalInner.helpers({
 	},
 	adminRole: function() {
 		return this.name === 'admin';
+	},
+	orgRole: function() {
+		return this.name === 'org-owner';
+	},
+	userRole: function() {
+		return this.name === 'user';
 	}
 });
 

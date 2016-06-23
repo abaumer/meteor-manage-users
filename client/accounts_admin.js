@@ -57,18 +57,18 @@ Template.accountsAdmin.events({
 
     'click [data-action="addUser"]': function(event, template) {
 		Session.set('userInScope', this);
-		},
+	},
 
-		'click [data-action="impersonate"]': function(event, template) {
-			event.preventDefault()
-			Session.set('impersonate', this._id);
-			Meteor.call('impersonate', this._id, Meteor.userId(), function(err, result) {
-				if (err)
-					console.log(err);
-				Meteor.connection.setUserId(Session.get('impersonate'));
-				Router.go('/');
-			});
-		}
+	'click [data-action="impersonate"]': function(event, template) {
+		event.preventDefault()
+		Session.set('impersonate', this._id);
+		Meteor.call('impersonate', this._id, Meteor.userId(), function(err, result) {
+			if (err)
+				console.log(err);
+			Meteor.connection.setUserId(Session.get('impersonate'));
+			Router.go('/');
+		});
+	}
 });
 
 Template.accountsAdmin.rendered = function() {
